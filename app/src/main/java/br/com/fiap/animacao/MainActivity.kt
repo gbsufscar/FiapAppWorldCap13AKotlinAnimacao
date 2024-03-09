@@ -6,9 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
@@ -102,15 +107,21 @@ fun AnimacaoScreen() {
             Button(onClick = {
                 visible.value = !visible.value
                 enter.value = slideInHorizontally(animationSpec = tween(2000))
-                exit.value = slideOutHorizontally() + fadeOut(animationSpec = tween(2000))
+                exit.value = slideOutHorizontally() + fadeOut(animationSpec = tween(2000)) // Combinação de animações
             }) {
                 Text(text = "Slide")
             }
             Button(onClick = {
-            }) {
+                visible.value = !visible.value
+                enter.value = scaleIn()
+                exit.value = scaleOut()
+            })  {
                 Text(text = "Scale")
             }
             Button(onClick = {
+                visible.value = !visible.value
+                enter.value = expandIn()
+                exit.value = shrinkOut()
             }) {
                 Text(text = "Expand")
             }
