@@ -9,6 +9,8 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -98,6 +100,9 @@ fun AnimacaoScreen() {
                 Text(text = "Fade")
             }
             Button(onClick = {
+                visible.value = !visible.value
+                enter.value = slideInHorizontally(animationSpec = tween(2000))
+                exit.value = slideOutHorizontally() + fadeOut(animationSpec = tween(2000))
             }) {
                 Text(text = "Slide")
             }
