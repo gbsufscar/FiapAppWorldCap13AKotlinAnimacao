@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -52,16 +53,25 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AnimacaoScreen() {
+
+    // Variáveis de estado para contolar a visibilidade e as animações
+    // -- visible: controla a visibilidade do componente
     var visible = remember {
         mutableStateOf(false)
     }
+
+    // -- enter: controla a animação de transição de entrada
     var enter = remember {
         mutableStateOf(fadeIn())
     }
+
+    // -- exit: controla a animação de transição de saída
     var exit = remember {
         mutableStateOf(fadeOut())
     }
 
+
+    // Tela
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -74,6 +84,16 @@ fun AnimacaoScreen() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(onClick = {
+                /*
+                Ao clicar no botão, o valor da variável visible é alterado de false para true. Assim,
+                o componente box será exibido com efeito de esmaecimento (fadeIn).
+
+                Ao clicar novamente, o valor da variável visible é alterado de true para false. Assim,
+                o componente box será ocultado com efeito de esmaecimento (fadeOut).
+                */
+                visible.value = !visible.value // Alterna a visibilidade quando o botão é clicado (true/false)
+                enter.value = fadeIn(animationSpec = tween(2000))
+                exit.value = fadeOut(animationSpec = tween(2000))
             }) {
                 Text(text = "Fade")
             }
@@ -91,6 +111,8 @@ fun AnimacaoScreen() {
             }
         }
         Spacer(modifier = Modifier.height(64.dp))
+
+        // Chamada para o componente que será animado
         BoxComponent(
             visible = visible.value,
             enter = enter.value,
